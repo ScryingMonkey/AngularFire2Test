@@ -1,0 +1,44 @@
+.page-header{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.upheader-title{
+  text-align: center;
+  color:#5c5c5c;
+}
+
+.upheader-subtitle{
+  text-align: center;
+  color:#989595;
+}
+
+.upheader-navbar{
+  height: auto;
+  border-radius: 20px;
+  background-color: #73AD21;
+  overflow: hidden;
+}
+
+.upheader-nav-button {
+  color: #215923;
+  background-color: #73AD21;
+  height: 3em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3em;
+  border: 1px solid #78b424;
+  border-radius: 15px;
+}
+
+/* Change the link color on hover */
+.upheader-nav-button:hover {
+    background-color: green;
+    color: white;
+}
+
+.clicked {
+  color: red;
+}

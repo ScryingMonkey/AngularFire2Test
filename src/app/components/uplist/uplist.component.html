@@ -1,0 +1,14 @@
+
+  <div class="uplist-border-box">
+    <h1
+    class="uplist-title"
+    >{{ (item | async)?.customerName }}
+    </h1>
+    <div class="uplist">
+      <ul class="list-container">
+        <li class="text" *ngFor="let item of items | async">
+          <uplist-li [item]="item"></uplist-li>
+        </li>
+      </ul>
+    </div>
+  </div>

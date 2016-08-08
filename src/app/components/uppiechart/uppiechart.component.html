@@ -1,0 +1,11 @@
+
+
+
+
+<h1>{{ data.campaignName }}</h1>
+<base-chart class="chart"
+           [data]="data.values"
+           [labels]="data.labels"
+           [chartType]="pieChartType"
+           (chartHover)="chartHovered($event)"
+           (chartClick)="chartClicked($event)"></base-chart>
