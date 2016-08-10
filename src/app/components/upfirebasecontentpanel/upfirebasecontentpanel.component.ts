@@ -1,6 +1,8 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import {Observable} from 'rxjs/observable';
 
 import { UpFirebaseListComponent } from '../upfirebaselist/upfirebaselist.component';
 import { UpListComponent } from '../uplist/uplist.component';
@@ -8,6 +10,7 @@ import { UpPieChartComponent } from '../uppiechart/uppiechart.component';
 import { Campaign } from '../../services/campaign';
 import { CampaignService } from '../../services/campaign.service';
 import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post';
 
 @Component({
   moduleId: module.id,
@@ -17,12 +20,40 @@ import { PostService } from '../../services/post.service';
   styleUrls: ['upfirebasecontentpanel.component.css'],
   providers: [ CampaignService, PostService, HTTP_PROVIDERS ]
 })
-export class UpFirebaseContentPanelComponent {
-  // item: FirebaseObjectObservable<any>;
-  // items: FirebaseListObservable<any[]>;
-  // constructor(af: AngularFire) {
-  //   this.item = af.database.object('/customers/Sprout for Business/');
-  //   this.items = af.database.list('/customers/Sprout for Business/constant_contact_campaign_summaries');
-  // }
+export class UpFirebaseContentPanelComponent implements OnInit {
+  private testItems: Observable<Post[]>;
+  private listTitle: string;
+  private afListTitle: string;
+  private afItem: FirebaseObjectObservable<any>;
+  private afItems: FirebaseListObservable<any[]>;
+
+  constructor(private _af: AngularFire, private _postService:PostService) {
+  console.log('...in UpListComponent.constructor');
+  }
+  ngOnInit(){
+    this.afItem = this._af.database.object('/customers/Sprout for Business/');
+    this.afItems = this._af.database.list('/customers/Sprout for Business/constant_contact_campaign_summaries');
+    this.testItems = this._postService.getPosts();
+    this.afItem.subscribe(item => (this.afListTitle = item.customerName));
+    this.listTitle = "Dummy Title"
+    console.log('...in UpFirebaseContentPanelComponent.ngOnInit() ...fetched items');
+  }
+  ngDoCheck(){
+  }
+  // ToDo:
+  // Delete upfirebaselist
+  // Pass keysToDisplay to uplists
+  // input keysToDisplay in uplist and display these keys
+  // on click in uplist:
+  //   create a clickObject with keysToDisplay,
+  //   output click Objest to contentPane,
+  //   input clickObject in contentPane
+  //   log clickObject
+  //   push clickObject to chart
+  // commit
+  // Create login page with authentication
+  // Deploy to web
+  // Celebrate!
+  
 
 }

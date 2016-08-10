@@ -28,7 +28,7 @@
   margin: 5px 5px 5px 5px;
   height: 100%;
 }
-.uplist-li{
+.up-li{
   padding: 5px 15px 5px 15px;
   text-align: justify;
   letter-spacing: 3px;
@@ -36,7 +36,7 @@
   transition: padding 0.3s;
 }
 
-.uplist-li:hover{
+.up-li:hover{
   color:#34ff01;
   cursor: pointer;
   padding-left: 1px;
@@ -44,7 +44,7 @@
   /*border-left: 3px solid #34ff01;*/
 }
 
-.uplist-li-detail{
+.up-li-detail{
   color: #757575;
   background-color: #d4ffc2;
   border: 1px solid white;

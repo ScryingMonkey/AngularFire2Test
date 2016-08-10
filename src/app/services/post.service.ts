@@ -8,7 +8,7 @@ import {Post} from './post';
 
 @Injectable()
 export class PostService {
-  private posts;
+  posts: Observable<Post[]>;
   private rootUrl = 'http://jsonplaceholder.typicode.com/posts';
   private dummyPosts: Post[] = [
         {
@@ -35,7 +35,9 @@ export class PostService {
   }
   getPosts(): Observable<Post[]> {
     console.log('...in PostService.getPosts() ...fetching posts');
-    return this._http.get(this.rootUrl).map(res => res.json());
+    this.posts = this._http.get(this.rootUrl).map((res) => res.json());
+    console.log('...in PostService.getPosts() posts[] : ' + this.posts);
+    return this.posts;
   }
 
   addPost(newPost) {

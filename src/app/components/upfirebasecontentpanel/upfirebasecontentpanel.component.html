@@ -1,11 +1,11 @@
 <div class="row content-container container-fluid">
-  <div class="col-md-4 content-panel">
-    <up-firebaselist></up-firebaselist>
+  <div class="col-md-3 content-panel">
+    <up-list [items]="afItems" [title]="afListTitle"></up-list>
   </div>
-  <div class="col-md-4 content-panel">
-    <up-list></up-list>
+  <div class="col-md-3 content-panel">
+    <up-list [items]="testItems" [title]="listTitle"></up-list>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-6">
     <up-piechart></up-piechart>
   </div>
 </div>
