@@ -2,12 +2,16 @@
   <div class="uplist-border-box">
     <h1 class="uplist-title">
       {{ title }}
-    <!-- {{ (item | async)?.customerName }} -->
     </h1>
     <div class="uplist">
       <ul class="list-container">
         <li class="text" *ngFor="let item of items | async">
-          <up-li [item]="item"></up-li>
+          <up-li
+            [item]="item"
+            [liTitleKey]="liTitleKey"
+            [detailLabels]="detailLabels"
+            [keysToDisplayInDetail]="keysToDisplayInDetail" >
+          </up-li>
         </li>
       </ul>
     </div>

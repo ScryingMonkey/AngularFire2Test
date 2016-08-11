@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CampaignService } from '../../services/campaign.service';
 
 @Component({
@@ -8,22 +8,32 @@ import { CampaignService } from '../../services/campaign.service';
   <div class="up-li"
   (click)="onSelect()"
   [class.clicked]="liClicked == true"
-  >{{item.title}}
+  >{{item[liTitleKey]}}
   </div>
   <div *ngIf="liClicked === true"
   class = "up-li-detail">
     <ul>
-      <li *ngFor="let key of keys">
+      <li *ngFor="let key of keysToDisplayInDetail">
         {{key}} : {{item[key]}}
       </li>
     </ul>
   </div>
   `,
-  styleUrls: ['uplist.component.css'],
-  inputs: ['item']
+  styleUrls: ['uplist.component.css']
 })
 export class UpLiComponent implements OnInit {
-  public item;
+  @Input() item; //json object
+  @Input() liTitleKey: string;
+  @Input() detailLabels: Array<string>; // Maybe should modify key names
+  // the service and change this to a boolean (showDetailLabels)
+  @Input() keysToDisplayInDetail: Array<string>;
+
+  // @Input() set keystodisplay(keystodisplay: Array<string>) {
+  //   this.keystodisplay = keystodisplay || Object.keys(this.item);
+  // }
+ //  @Input() set liTitleKey(liTitleKey: string) {
+ //   this.liTitleKey = liTitleKey || 'No Title Provided';
+ // }
   public liClicked = false;
   keys = Array<string>();
   data = Array<string>();
@@ -31,8 +41,14 @@ export class UpLiComponent implements OnInit {
   constructor(private _campaignService: CampaignService) {
   }
   ngOnInit() {
-    this.keys = Object.keys(this.item);
-    this.data = this.item;
+    // if no keys to display are given, display all keys
+    if (typeof this.keysToDisplayInDetail === 'undefined' ||
+               this.keysToDisplayInDetail.length < 1) {
+      this.keysToDisplayInDetail = Object.keys(this.item);
+      }
+    //ToDo: if detailLabels is null or empty, don't disply label or ':'
+
+    // this.keystodisplay = (keystodisplay == null) ? Object.keys(this.item) : keystodisplay;
     // console.log(this.keys);
   }
 

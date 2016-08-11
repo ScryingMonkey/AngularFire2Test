@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import { UpLiComponent } from './upli.component';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post';
+// import { PostService } from '../../services/post.service';
+// import { Post } from '../../services/post';
 import {Observable} from 'rxjs/observable';
 
 @Component({
@@ -9,31 +9,25 @@ import {Observable} from 'rxjs/observable';
   selector: 'up-list',
   templateUrl: 'uplist.component.html',
   styleUrls: ['uplist.component.css'],
-  directives: [UpLiComponent],
-  inputs: ['items', 'title']
+  directives: [UpLiComponent]
 })
 export class UpListComponent implements OnInit {
   public liClicked = true;
-  private items: Observable<Post[]>;
-  private title: string;
+  @Input() items: Observable<any[]>;
+  @Input() title: string;
+  @Input() liTitleKey: string;
+  @Input() detailLabels: Array<string>;
+  @Input() keysToDisplayInDetail: string;
 
   onSelect() {
     this.liClicked = !this.liClicked;
-    console.log('...in UpListComponent.onSelect(), title: '+this.title);
+    console.log('...in UpListComponent.onSelect(), title: ' + this.title);
   }
 
-  constructor(){
-    console.log('...in UpListComponent.constructor, title: '+this.title);
+  constructor() {
+    console.log('...in UpListComponent.constructor, title: ' + this.title);
   }
-  ngOnInit(){
-    console.log('...in UpListComponent.ngOnInit() title: '+this.title+', items: '+ this.items);
-  }
-
-  ngDoCheck(){
-    // this._postService.getPosts().subscribe(
-    //   posts => this.posts = posts,
-    //   error => console.log(error)
-    // );
-    // console.log("...in UpListComponent.ngOnInit() ...fetched posts : "+ this.posts);
+  ngOnInit() {
+    console.log('...in UpListComponent.ngOnInit() title: ' + this.title + ', items: ' + this.items);
   }
 }
