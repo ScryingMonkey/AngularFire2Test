@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { UpHeaderComponent } from './components/upheader/upheader.component';
 import { UpFirebaseContentPanelComponent } from './components/upfirebasecontentpanel/upfirebasecontentpanel.component';
-import { UpFirebaseListComponent } from './components/upfirebaselist/upfirebaselist.component';
-import { UpPieChartComponent } from './components/uppiechart/uppiechart.component';
+import { UpContentPanelComponent } from './components/upcontentpanel/upcontentpanel.component';
 
 @Component({
   moduleId: module.id,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  directives: [UpHeaderComponent, UpFirebaseContentPanelComponent],
+  directives: [UpHeaderComponent, UpFirebaseContentPanelComponent, UpContentPanelComponent],
   styleUrls: ['app.component.css']
 })
 export class AppComponent {

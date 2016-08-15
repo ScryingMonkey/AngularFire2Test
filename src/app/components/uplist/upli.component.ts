@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CampaignService } from '../../services/campaign.service';
+import { Component, OnInit, Input, Output,  EventEmitter } from '@angular/core';
+import { UplistService } from './uplist.service';
+
+import { ClickObject } from './clickobject.interface';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +15,7 @@ import { CampaignService } from '../../services/campaign.service';
   <div *ngIf="liClicked === true"
   class = "up-li-detail">
     <ul>
-      <li *ngFor="let key of keysToDisplayInDetail">
+      <li *ngFor="let key of liDetailKeys">
         {{key}} : {{item[key]}}
       </li>
     </ul>
@@ -22,38 +24,54 @@ import { CampaignService } from '../../services/campaign.service';
   styleUrls: ['uplist.component.css']
 })
 export class UpLiComponent implements OnInit {
-  @Input() item; //json object
   @Input() liTitleKey: string;
-  @Input() detailLabels: Array<string>; // Maybe should modify key names
-  // the service and change this to a boolean (showDetailLabels)
-  @Input() keysToDisplayInDetail: Array<string>;
-
-  // @Input() set keystodisplay(keystodisplay: Array<string>) {
-  //   this.keystodisplay = keystodisplay || Object.keys(this.item);
-  // }
- //  @Input() set liTitleKey(liTitleKey: string) {
- //   this.liTitleKey = liTitleKey || 'No Title Provided';
- // }
+  @Input() liDetailKeys: Array<string>;
+  @Input() item; //json object
+  // @Input() detailLabels: Array<string>; // Maybe should modify key names
+  // // the service and change this to a boolean (showDetailLabels)
   public liClicked = false;
-  keys = Array<string>();
-  data = Array<string>();
+  private clickObject: ClickObject = {title:'Default Title', values:{}};
+  @Output() clickEmitter = new EventEmitter<Object>();
 
-  constructor(private _campaignService: CampaignService) {
+  constructor(private _uplistService: UplistService) {
+    console.log('...in UpLiComponent.constructor, item : ' + this.item);
   }
   ngOnInit() {
+    //this.test('ngOnInit');
+
     // if no keys to display are given, display all keys
-    if (typeof this.keysToDisplayInDetail === 'undefined' ||
-               this.keysToDisplayInDetail.length < 1) {
-      this.keysToDisplayInDetail = Object.keys(this.item);
+    if (typeof this.liDetailKeys === 'undefined' ||
+               this.liDetailKeys.length < 1) {
+      this.liDetailKeys = Object.keys(this.item);
       }
     //ToDo: if detailLabels is null or empty, don't disply label or ':'
 
-    // this.keystodisplay = (keystodisplay == null) ? Object.keys(this.item) : keystodisplay;
-    // console.log(this.keys);
+
   }
 
   onSelect() {
-    this.liClicked = !this.liClicked;
-    console.log('...in UpLiComponent.onSelect()');
+    
+    if(!this.liClicked) {
+      // this.clickObject.title = 'Default Title';
+      this.clickObject.title = this.item[this.liTitleKey];
+      for (let key of this.liDetailKeys){
+        this.clickObject.values[key] = this.item[key];
+      }
+      this.clickEmitter.emit(this.clickObject);
+      console.log('...in UpLiComponent.onSelect() clickObject: ');
+      console.dir(this.clickObject);
+    }else{
+      console.log('...in UpLiComponent.onSelect() Unclicking')
+    }
+    this.liClicked = !this.liClicked;    
+  }
+
+  test(method: string){
+    console.log('...in UpLiComponent.'+method+', writing values to console :');
+    console.log('@Input() liTitleKey: ' + this.liTitleKey);
+    console.log('@Input() liDetailKeys: ' + this.liDetailKeys);
+    console.log('@Input() item: ' + this.item);
+    console.dir(this.item);
+    console.log('...finished writing to console.');
   }
 }

@@ -9,10 +9,13 @@
           <up-li
             [item]="item"
             [liTitleKey]="liTitleKey"
-            [detailLabels]="detailLabels"
-            [keysToDisplayInDetail]="keysToDisplayInDetail" >
+            [liDetailKeys]="liDetailKeys" 
+            (clickEmitter)="onClicked($event)"
+            [liClicked]='liClicked'>
           </up-li>
         </li>
       </ul>
     </div>
   </div>
+
+  <!---->

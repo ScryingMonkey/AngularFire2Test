@@ -20,12 +20,6 @@ import { Post } from '../../services/post';
   providers: [ CampaignService, PostService, HTTP_PROVIDERS ]
 })
 export class UpFirebaseContentPanelComponent implements OnInit {
-  private testListItems: Observable<Post[]>;
-  private testListTitle: string;
-  private testListLiTitleKey: string;
-  private testDetailLabels: Array<string>;
-  private testListKeys: Array<string>;
-
   private afItem: FirebaseObjectObservable<any>;
   private afItems: FirebaseListObservable<any[]>;
   private afListTitle: string;
@@ -38,17 +32,17 @@ export class UpFirebaseContentPanelComponent implements OnInit {
   }
   ngOnInit() {
     this.afItem = this._af.database.object('/customers/Sprout for Business/');
-    this.afItems = this._af.database.list('/customers/Sprout for Business/constant_contact_campaign_summaries');
-    this.afItem.subscribe(item => (this.afListTitle = item.customerName));
-    this.afLiTitleKey = 'campaignTitle';
-    this.afDetailLabels = ['clickThrough', 'openRate', 'totalSent'];
-    this.afListKeys = ['clickThrough', 'openRate', 'totalSent'];
+    // this.afItems = this._af.database.list('/customers/Sprout for Business/constant_contact_campaign_summaries');
+    // this.afItem.subscribe(item => (this.afListTitle = item.customerName));
+    // this.afLiTitleKey = 'campaignTitle';
+    // this.afDetailLabels = ['clickThrough', 'openRate', 'totalSent'];
+    // this.afListKeys = ['clickThrough', 'openRate', 'totalSent'];
 
-    this.testListItems = this._postService.getPosts();
-    this.testListTitle = 'Dummy Title';
-    this.testListLiTitleKey = 'title';
-    this.testDetailLabels = [];
-    this.testListKeys = ['body'];
+    // this.testListItems = this._postService.getPosts();
+    // this.testListTitle = 'Dummy Title';
+    // this.testListLiTitleKey = 'title';
+    // this.testDetailLabels = [];
+    // this.testListKeys = ['body'];
 
     console.log('...in UpFirebaseContentPanelComponent.ngOnInit() ...fetched items');
   }
