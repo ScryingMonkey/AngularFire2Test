@@ -15,7 +15,9 @@ const map: any = {
   'ng2-bootstrap': 'vendor/ng2-bootstrap',
   'moment': 'vendor/moment/moment.js',
   'angular2': 'vendor/angular2/',
-  'bootstrap': 'vendor/bootstrap/'
+  'bootstrap': 'vendor/bootstrap/',
+  'bootstrap-social': 'vendor/bootstrap-social/',
+  'font-awesome': 'vendor/font-awesome/'
 };
 
 /** User packages configuration. */
@@ -42,8 +44,18 @@ const packages: any = {
     defaultExtension: 'css',
     main: 'bootstrap.min.css'
   },
+  'bootstrap-social': {
+    format: 'cjs',
+    defaultExtension: 'css',
+    main: 'bootstrap-social.css'
+  },
   'moment': {
     format: 'cjs'
+  },
+  'font-awesome': {
+    format: 'cjs',
+    defaultExtension: 'css',
+    main: 'font-awesome.min.css">'
   }
 };
 

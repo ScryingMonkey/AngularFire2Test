@@ -1,0 +1,30 @@
+<div class="fluid-container">
+    <div class="row row-centered ">
+        <!--<div class="col-md-2"></div>-->
+        <div class="col-md-10 col-centered login-panel ">
+                
+                <label for="txtPassword">User name:</label><br>
+                <input id="txtEmail" class= "input-sm login-input" type="email" placeholder="Email"><br><br>
+                
+                <label for="txtPassword">Password:</label><br>
+                <input id="txtPassword" class= "input-sm login-input" type="password" placeholder="Password"><br><br>
+
+                <button id="btnLogin" class="btn btn-action">Log in</button>
+                <button id="btnSignUp" class="btn btn-secondary">Sign up</button>
+                <button id="btnSignOut" class="btn btn-action hide">Log Out</button>
+
+                <br><br><br><br>
+
+                <a class="btn btn-block btn-social btn-facebook"
+                    (click)="loginWithFacebook()">
+                    <span class="fa fa-facebook"></span> Sign in with Facebook
+                </a>
+                <a class="btn btn-block btn-social btn-google" 
+                    (click)="loginWithGoogle()">
+                    <span class="fa fa-google"></span> Sign in with Google
+                </a>
+                <br><br>
+        </div>
+        <!--<div class="col-md-2"></div>-->
+    </div>
+</div>

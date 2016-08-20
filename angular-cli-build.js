@@ -23,7 +23,9 @@ module.exports = function(defaults) {
       //'chart.js/dist/Chart.min.js',
       'chart.js/**/*.js',
       'moment/moment.js',
-      'bootstrap/dist/css/bootstrap.min.css'
+      'bootstrap/dist/**',
+      'bootstrap-social/**',
+      'font-awesome/**'
     ]
   });
 };

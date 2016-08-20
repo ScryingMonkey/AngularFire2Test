@@ -27,11 +27,12 @@ export class UpPieChartComponent implements OnInit {
 
   // events
   public chartClicked(e: any): void {
-    console.log(e);
+    alert(e.active);
+    console.log(e.active);
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+    //console.log(e);
   }
 
   getChartData() {

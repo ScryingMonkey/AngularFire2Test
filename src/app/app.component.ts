@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { UpHeaderComponent } from './components/upheader/upheader.component';
 import { UpFirebaseContentPanelComponent } from './components/upfirebasecontentpanel/upfirebasecontentpanel.component';
 import { UpContentPanelComponent } from './components/upcontentpanel/upcontentpanel.component';
+import { UpLoginPageComponent } from './components/uploginpage/uploginpage.component';
 
 @Component({
   moduleId: module.id,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  directives: [UpHeaderComponent, UpFirebaseContentPanelComponent, UpContentPanelComponent],
+  directives: [UpHeaderComponent, 
+                UpFirebaseContentPanelComponent, 
+                UpContentPanelComponent,
+                UpLoginPageComponent ],
   styleUrls: ['app.component.css']
 })
 export class AppComponent {
