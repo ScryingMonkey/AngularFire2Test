@@ -23,15 +23,11 @@ export class UpContentPanelComponent implements OnInit {
   private liDetailKeys: string[];
   private liItems: Observable<Object[]>;
   private pieChartData: Observable<PieChartData>;
-  // private stListLiTitleKey: string;
-  // private testListKeys: Array<string>;
 
   constructor(private _uplistService: UplistService) {
-  console.log('...in UpContentPanelComponent.constructor');
-  }
-  ngOnInit() {
+    console.log('...in UpContentPanelComponent.constructor');
     // Establish subcriptons
-    this._uplistService.testListTitle$.subscribe(
+    this._uplistService.listTitle$.subscribe(
                       (listTitle:string) => this.listTitle = listTitle,
                       (error:any) => console.error(error)
                       );
@@ -43,6 +39,8 @@ export class UpContentPanelComponent implements OnInit {
                       (data) => this.liDetailKeys = data,
                       (error:any) => console.error(error)
                       );
+  }
+  ngOnInit() {
     // pass observable to uplist child
     this.liItems = this._uplistService.liItems$;
     // pass observable to uppiechart child
@@ -58,11 +56,6 @@ export class UpContentPanelComponent implements OnInit {
     console.log('liItems : ' + this.liItems);
     console.dir(this.liItems);
     console.log('...end writing data to console.')
-
-    // this.listTitle = this.data.listTitle;
-    // this.testListLiTitleKey = this.data.liTitleKey;
-    // this.testListKeys = this.data.detaiKeys;
-    // this.testListItems = this.data.items;
   }
   // ToDo:
   // create service TestListService

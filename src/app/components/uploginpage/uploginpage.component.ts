@@ -1,9 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFire, FirebaseAuth, AuthProviders, AuthMethods } from 'angularfire2';
 import {Observable} from 'rxjs/observable';
+import { Subject }    from 'rxjs/Subject';
+import { Router }   from '@angular/router';
 
 import { UplistService } from '../uplist/uplist.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   moduleId: module.id,
@@ -15,28 +18,18 @@ import { UplistService } from '../uplist/uplist.service';
 export class UpLoginPageComponent {
   private listTitle: string;
   private liTitleKey: string;
+  private auth: Subject<any>;
+  private userName;
+  public isLoggedIn: boolean;
   
-  constructor(public af: AngularFire) {
-  console.log('...in UpContentPanelComponent.constructor');
-  this.af.auth.subscribe(auth => console.log(auth));
+  constructor(public _as: AuthService, public af: AngularFire, public router: Router) {
+    console.log('...in UpContentPanelComponent.constructor');
+    _as.isLoggedIn$.subscribe(isLoggeIn => this.isLoggedIn = isLoggeIn);
   }
-
-  loginWithFacebook() {
-    this.af.auth.login({
-      provider: AuthProviders.Facebook,
-      method: AuthMethods.Popup,
-    });
-    console.log('Logged in user with Facebook :');
-    console.dir(this.af.auth);
-  }
-
-  loginWithGoogle() {
-    this.af.auth.login({
-      provider: AuthProviders.Google,
-      method: AuthMethods.Popup,
-    });
-    console.log('Logged in user with Google :');
-    console.dir(this.af.auth);
-  }
+  loginWithEmail() {  }
+  loginWithGoogle() { this._as.loginWithGoogle(); }
+  loginWithFacebook() { this._as.loginWithFacebook(); }
+  logout() { this._as.logout(); }
+  loginTester() { this._as.loginTester(); }
 
 }

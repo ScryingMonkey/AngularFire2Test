@@ -11,14 +11,14 @@
   <div class="container-fluid">
     <!-- <div class="navbar-header"> -->
     <div class="upheader-navbar row ">
-      <div class="col-md-4 upheader-nav-button">
-        {{navlinks[0]}}
+      <div class="col-md-4 upheader-nav-button" a routerLink={{navlinks[0]}}>
+        <a routerLink= {{navlinks[0]}}>{{navlinks[0] | uppercase}}</a>
       </div>
-      <div class="col-md-4 upheader-nav-button" a href="#">
-        {{navlinks[1]}}
+      <div class="col-md-4 upheader-nav-button" a routerLink= {{navlinks[1]}}>
+        <a routerLink= {{navlinks[1]}}>{{ navlinks[1] | uppercase }}</a>
       </div>
-      <div class="col-md-4 upheader-nav-button" a href="#">
-        {{navlinks[2]}}
+      <div class="col-md-4 upheader-nav-button" a routerLink={{navlinks[2]}}>
+        <a routerLink= {{navlinks[2]}}>{{navlinks[2] | uppercase}}</a>
       </div>
     </div>
   </div><!-- /.container-fluid -->
