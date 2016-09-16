@@ -25,37 +25,26 @@ export class UpContentPanelComponent implements OnInit {
   private pieChartData: Observable<PieChartData>;
 
   constructor(private _uplistService: UplistService) {
-    console.log('...in UpContentPanelComponent.constructor');
+    console.log('[ UpLoginPageComponent.constructor');
     // Establish subcriptons
-    this._uplistService.listTitle$.subscribe(
-                      (listTitle:string) => this.listTitle = listTitle,
-                      (error:any) => console.error(error)
-                      );
-    this._uplistService.liTitleKey$.subscribe(
-                      (data) => this.liTitleKey = data,
-                      (error:any) => console.error(error)
-                      );
-    this._uplistService.liDetailKeys$.subscribe(
-                      (data) => this.liDetailKeys = data,
-                      (error:any) => console.error(error)
-                      );
+    // this._uplistService.listTitle$.subscribe(
+    //                   (listTitle:string) => this.listTitle = listTitle,
+    //                   (error:any) => console.error(error)
+    //                   );
   }
   ngOnInit() {
+    console.log('[ UpContentPanelComponent.ngOnInit');
     // pass observable to uplist child
-    this.liItems = this._uplistService.liItems$;
+    // this.liItems = this._uplistService.liItems$;
     // pass observable to uppiechart child
     this.pieChartData = this._uplistService.pieChartData$;
     // Update data
-    this._uplistService.updateTestData();
+    this._uplistService.updateListData(this._uplistService.getDummyListData());
     // OR if passing the observable to the template and using the async pipe 
     //this.data = _testService.testData$;
-    console.log('...in UpContentPanelComponent.ngOnInit() ...fetched data, writing to console:');
-    console.log('listTitle : ' + this.listTitle);
-    console.log('liTitleKey : ' + this.liTitleKey);
-    console.log('liDetailKeys : ' + this.liDetailKeys);
-    console.log('liItems : ' + this.liItems);
-    console.dir(this.liItems);
-    console.log('...end writing data to console.')
+    console.log('...pieChartData fetched');
+    console.log('..._uplistService.listData updated');
+    console.log('...end of UpContentPanelComponent.ngOnInit');
   }
   // ToDo:
   // create service TestListService

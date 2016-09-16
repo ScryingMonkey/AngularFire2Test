@@ -9,7 +9,7 @@
         <div class="col-md-6">{{ title }}</div>
         <div class="col-md-6 logged-in-status" >
             <div *ngIf="_as.user$ | async">Logged in as: {{ _as.userName$ | async}}</div>
-            <div *ngIf="!(_as.user$ | async)">Please log in</div>
+            <div *ngIf="!(_as.user$ | async)"><a [routerLink]="['/login']">Please log in</a></div>
         </div>
       </div>
       <div class="row upheader-navbar test-border">

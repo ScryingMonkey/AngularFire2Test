@@ -23,7 +23,7 @@ export class UpLoginPageComponent {
   public isLoggedIn: boolean;
   
   constructor(public _as: AuthService, public af: AngularFire, public router: Router) {
-    console.log('...in UpContentPanelComponent.constructor');
+    console.log('[ UpLoginPageComponent.constructor');
     _as.isLoggedIn$.subscribe(isLoggeIn => this.isLoggedIn = isLoggeIn);
   }
   loginWithEmail() {  }

@@ -24,6 +24,7 @@ export class UpheaderComponent02 implements OnInit {
   private userName: string;
 
   constructor(private _as: AuthService, private router: Router) { 
+    console.log('[ UpheaderComponent02.constructor ]');
     // this._as.user$.subscribe(user => (this.user = user));
     // this.auth = this._as.auth$.subscribe(res => (console.log("auth change")));
     this.user$ = _as.user$;
@@ -34,13 +35,19 @@ export class UpheaderComponent02 implements OnInit {
                   {'label':'Datasets', 'address':'datasets'},
                   {'label':'Welcome', 'address':'welcome'},
                   {'label':'Dashboard', 'address':'dashboard'},
-                  {'label':'User Data', 'address':'userdata'}
+                  {'label':'User Data', 'address':'userdata'},
+                  {'label':'Log In', 'address':'login'}
                   ];
-    if(_as.user$) {
-      this.links.push({'label':'Log Out', 'address':'logout'});
-    } else {
-      this.links.push({'label':'Log In', 'address':'login'});
-    }
+    // change last link to 'Log in' or 'Log Out'
+    // updates when logged in status changes
+    _as.isLoggedIn$.subscribe(isLoggedIn => {
+      if(isLoggedIn) {
+        this.links[this.links.length-1] = {'label':'Log Out', 'address':'logout'};
+      } else {
+        this.links[this.links.length-1] = {'label':'Log In', 'address':'login'};
+      }
+    });
+
   }
 
   ngOnInit() {

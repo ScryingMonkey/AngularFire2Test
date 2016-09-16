@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/observable';
 
 import { UpListComponent } from '../uplist/uplist.component';
 import { UplistService } from '../uplist/uplist.service';
+import { ListData } from '../uplist/listdata.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -18,47 +19,37 @@ export class UpUserContentPanelComponent implements OnInit {
   private liTitleKey: string;
   private liDetailKeys: string[];
   private liItems: Observable<Object[]>;
+  private listData: ListData;
 
   constructor(private _uplistService: UplistService, private _as: AuthService) {
-    console.log('[ UpUserContentPanelComponent.constructor ]');
+    console.log('[ UpUserContentPanelComponent.constructor');
       // Establish subscriptions
     this._uplistService.listTitle$.subscribe(
                       (listTitle:string) => this.listTitle = listTitle,
-                      (error:any) => console.error(error)
-                      );
-    this._uplistService.liTitleKey$.subscribe(
-                      (data) => this.liTitleKey = data,
                       (error:any) => console.error(error)
                       );
     this._uplistService.liDetailKeys$.subscribe(
                       (data) => this.liDetailKeys = data,
                       (error:any) => console.error(error)
                       );
+    // Bind AuthService.userListData$ to UplistService.listData
     this._as.userListData$.subscribe( userListData => _uplistService.updateListData(userListData));
   }
   ngOnInit() {
     // pass observable to uplist child
-    this.liItems = this._uplistService.liItems$;
+    // this.liItems = this._uplistService.liItems$;
     // Update UplistService.title
 
-    // ToDo: Pull formatted user data from AuthService
-
-    // ToDo: Update UplistService with user data 
-
     // Update data
-    this._uplistService.updateTestData();
+    // this._uplistService.updateListData();
     // OR if passing the observable to the template and using the async pipe 
     //this.data = _testService.testData$;
-    console.log('...UpContentPanelComponent.ngOnInit() fetched data, writing to console:');
-    console.log('......listTitle : ' + this.listTitle);
-    console.log('......liTitleKey : ' + this.liTitleKey);
-    console.log('......liDetailKeys : ' + this.liDetailKeys);
-    console.log('......liItems : ' + this.liItems);
-    console.dir(this.liItems);
-    console.log('...end writing data to console.')
+    // console.log('[ UpUserContentPanelComponent.ngOnInit()');
+    // this._uplistService.testListData(this.listData);
+
   }
   authtester(){
-    console.log('...UpContentPanelComponent.authtester()')
+    console.log('[ UpUserContentPanelComponent.authtester()')
     this._as.loginTester();
   }
   // ToDo:

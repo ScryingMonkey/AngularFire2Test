@@ -34,11 +34,10 @@ export class UpLiComponent implements OnInit {
   @Output() clickEmitter = new EventEmitter<Object>();
 
   constructor(private _uplistService: UplistService) {
-    console.log('...in UpLiComponent.constructor, item : ' + this.item);
+    console.log('[ UpLiComponent.constructor');
+    console.log('...item : ' + this.item);
   }
   ngOnInit() {
-    //this.test('ngOnInit');
-
     // if no keys to display are given, display all keys
     if (typeof this.liDetailKeys === 'undefined' ||
                this.liDetailKeys.length < 1) {
@@ -50,7 +49,7 @@ export class UpLiComponent implements OnInit {
   }
 
   onSelect() {
-    
+    console.log('[ UpLiComponent.onSelect()');
     if(!this.liClicked) {
       // this.clickObject.title = 'Default Title';
       this.clickObject.title = this.item[this.liTitleKey];
@@ -58,16 +57,17 @@ export class UpLiComponent implements OnInit {
         this.clickObject.values[key] = this.item[key];
       }
       this.clickEmitter.emit(this.clickObject);
-      console.log('...in UpLiComponent.onSelect() clickObject: ');
+      console.log('...clickObject: ');
       console.dir(this.clickObject);
     }else{
-      console.log('...in UpLiComponent.onSelect() Unclicking')
+      console.log('...unclicking')
     }
     this.liClicked = !this.liClicked;    
   }
 
   test(method: string){
-    console.log('...in UpLiComponent.'+method+', writing values to console :');
+    console.log('[ UpLiComponent.'+method+'');
+    console.log('...writing values to console :');
     console.log('@Input() liTitleKey: ' + this.liTitleKey);
     console.log('@Input() liDetailKeys: ' + this.liDetailKeys);
     console.log('@Input() item: ' + this.item);

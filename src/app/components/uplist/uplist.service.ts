@@ -14,41 +14,27 @@ export class UplistService {
   private liTitleKey: BehaviorSubject<string> = new BehaviorSubject('Default liTitleKey');
   private liDetailKeys: BehaviorSubject<Array<string>> = new BehaviorSubject(Array());
   private liItems: BehaviorSubject<Array<Object>> = new BehaviorSubject(Array([]));
+
   private clickObject: ClickObject;
-  private listData: ListData;
+  private listData: BehaviorSubject<ListData> = new BehaviorSubject(this.getDummyListData());
   private pieChartData: BehaviorSubject<PieChartData> = new BehaviorSubject({
                           labels: ['?', '?', '?'], values: [1, 1, 1], title: 'Loading...' });
   
   constructor() {
-    console.log('[ UplistService.constructor ]');
+    console.log('[ UplistService.constructor');
   }
 
   // requires an object with the following keys:
   //   listTitle: string, listTitleKey: string, liDetailKeys: Array<string>, liItems: Object
   updateListData(data: ListData) {
-    this.listTitle.next( data.listTitle );
-    this.liTitleKey.next( data.liTitleKey );
-    this.liDetailKeys.next( data.liDetailKeys );
-    this.liItems.next( data.liItems );
-    console.log('...UplistService.updateListData() data updated:');
+    console.log('[ UplistService.updateListData()');
+    this.listData.next(data) ;
+    // this.listTitle.next( data.listTitle );
+    // this.liTitleKey.next( data.liTitleKey );
+    // this.liDetailKeys.next( data.liDetailKeys );
+    // this.liItems.next( data.liItems );
+    console.log('...data updated:');
     console.dir(data);
-  }
-  updateTestData() {
-    let data: ListData = {
-      'listTitle': 'Title From UplistService',
-      'liTitleKey': 'liTitle',
-      'liDetailKeys': ['detail1', 'detail2', 'detail3'],
-      'liItems': [
-          {'liTitle': 'liTitle1' , 'detail1':3, 
-          'detail2':4, 'detail3':5},
-          {'liTitle': 'liTitle2' , 'detail1':345, 
-          'detail2':135, 'detail3':34},
-          {'liTitle': 'liTitle3' , 'detail1':10485, 
-          'detail2':3409, 'detail3':245}
-        ]
-    }
-    console.log('...UplistService.updateTestData() updating data:')
-    this.updateListData(data);
   }
   updatePieChartData(data: PieChartData) { 
     this.pieChartData.next(data); 
@@ -62,14 +48,15 @@ export class UplistService {
                           temp.labels.push(key);
                           temp.values.push(co.values[key]);
                               });
-    console.log('...UplistService.updateTestData() clickObject converted :');
+    console.log('...clickObject converted :');
     console.dir(temp);
     return temp;
   }
   // Setters
   setClickObject(clickObject: ClickObject){
+    console.log('[ UplistService.setclickObject()');
     this.clickObject = clickObject;
-    console.log('...UplistService.setclickObject() clickObject set to: ');
+    console.log('...clickObject set to: ');
     console.dir(this.clickObject);
     this.updatePieChartData(this.convertClickObjectToPieChart(clickObject));
   }
@@ -78,6 +65,37 @@ export class UplistService {
   get liTitleKey$() { return this.liTitleKey.asObservable(); }
   get liDetailKeys$() { return this.liDetailKeys.asObservable(); }
   get liItems$() { return this.liItems.asObservable(); }
+
+  get listData$() { return this.listData.asObservable(); }
   getClickObject() { return this.clickObject; }
   get pieChartData$() { return this.pieChartData.asObservable(); }
+  getDummyListData() {
+    console.log('[ UplistService.updateTestData()');
+    let data: ListData = {
+      'listTitle': 'Dummy Title From UplistService',
+      'liTitleKey': 'liTitle',
+      'liDetailKeys': ['detail1', 'detail2', 'detail3'],
+      'liItems': [
+          {'liTitle': 'liTitle1' , 'detail1':3, 
+          'detail2':4, 'detail3':5},
+          {'liTitle': 'liTitle2' , 'detail1':345, 
+          'detail2':135, 'detail3':34},
+          {'liTitle': 'liTitle3' , 'detail1':10485, 
+          'detail2':3409, 'detail3':245}
+        ]
+    }
+    console.log('...updating data:')
+    return data;
+  }
+  //Testers
+  testListData(data:ListData) {
+    console.log('[ UplistService.testListData()');
+    console.log('...fetched data, writing to console:');
+    console.log('......listTitle : ' + data.listTitle);
+    console.log('......liTitleKey : ' + data.liTitleKey);
+    console.log('......liDetailKeys : ' + data.liDetailKeys);
+    console.log('......liItems : ' + data.liItems);
+    console.dir(data.liItems);
+    console.log('...end writing data to console.')
+  }
 }

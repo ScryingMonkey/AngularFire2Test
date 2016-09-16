@@ -1,6 +1,7 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { UpLiComponent } from './upli.component';
 import { UplistService } from './uplist.service';
+import { ListData } from './listdata.interface';
 import { ClickObject } from './clickobject.interface';
 
 // import { PostService } from '../../services/post.service';
@@ -14,42 +15,31 @@ import {Observable} from 'rxjs/observable';
   styleUrls: ['uplist.component.css'],
   directives: [UpLiComponent]
 })
-export class UpListComponent implements OnInit {
-  public liClicked: boolean;
-  @Input() title: string;
-  @Input() liTitleKey: string;
-  @Input() liDetailKeys: string[];
-  @Input() items: Observable<any[]>;
+export class UpListComponent {
   @Input() clickObject: ClickObject;
-
-  onSelect() {
-    this.liClicked = !this.liClicked;
-    console.log('...in UpListComponent.onSelect(), title: ' + this.title);
-  }
+  private listData:ListData;
+  public liClicked: boolean;
 
   constructor(private _uplistService: UplistService) {
-    console.log('...in UpListComponent.constructor, title: ' + this.title);
+    console.log('[ UpListComponent.constructor()');
+    // Establish subscriptions
+    this._uplistService.listData$.subscribe(
+                                      (listData:ListData) => this.listData = listData,
+                                      (error:any) => console.error(error)
+                                      );
+    console.log('...listData fetched from UpListService: ' + this.listData.listTitle);
   }
-  ngOnInit() {
-    console.log('...in UpListComponent.ngOnInit()');
-    //this.test('ngOnInit');
-    this.items.subscribe(res => console.dir(res)); 
-    // this._testService.updateTestData();
-    }
-  onClicked(clickObject: ClickObject) {
+  onSelect() {
+    console.log('[ UpListComponent.onSelect()');
     this.liClicked = !this.liClicked;
-    this.clickObject = clickObject;
-    console.log("... in UpListComponent.onClicked() clickObject :" + this.clickObject);
-    console.dir(this.clickObject);
-    this._uplistService.setClickObject(this.clickObject);
+    console.log('...listData.listTitle: '); // + this.listData.listTitle);
   }
-  test(method: string){
-    console.log('...in UpListComponent.'+method+', writing values to console :');
-    console.log('@Input() liTitleKey: ' + this.liTitleKey);
-    console.log('@Input() liDetailKeys: ' + this.liDetailKeys);
-    console.log('@Input() item: ' + this.items);
-    console.dir(this.items);
-    console.log('...finished writing to console.');
+  onClicked(clickObject: ClickObject) {
+    console.log("[ UpListComponent.onClicked()");
+    this.liClicked = !this.liClicked;
+    console.dir(this.clickObject);
+    this._uplistService.setClickObject(clickObject);
+    console.log("...updated UpListService.clickObject :" + clickObject);
   }
 }
 
