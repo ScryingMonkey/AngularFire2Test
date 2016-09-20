@@ -14,8 +14,9 @@ export class AuthService {
   private userName: BehaviorSubject<string> = new BehaviorSubject('???');
   private userListData: BehaviorSubject<any> = new BehaviorSubject({});
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private userPictureURL: BehaviorSubject<string> = new BehaviorSubject(
-                            "http://png.clipart.me/graphics/thumbs/103/crash-test-dummy_103003187.jpg");
+  // private userPictureURL: BehaviorSubject<string> = new BehaviorSubject(
+  //                           "http://png.clipart.me/graphics/thumbs/103/crash-test-dummy_103003187.jpg");
+  private userPictureURL: string = "http://png.clipart.me/graphics/thumbs/103/crash-test-dummy_103003187.jpg";
 
   private userHasPicture: boolean = false;
   private userPictureKey: string = 'none';
@@ -69,6 +70,7 @@ export class AuthService {
   logout() {
       console.log("[ AuthService.logout()");
       this._af.auth.logout();
+      this.isLoggedIn.next(false);
       console.log("...isLoggedIn == " + this.isLoggedIn.value);   
   }
 
@@ -86,7 +88,8 @@ export class AuthService {
     console.log('...userHasPicture :' +this.userHasPicture+ ', userPictureKey : '+this.userPictureKey);
     if(this.userHasPicture) {
       console.log('...userPictureURL :' +user[this.userPictureKey]); 
-      this.userPictureURL.next(user[this.userPictureKey] ); 
+      // this.userPictureURL.next( user[this.userPictureKey] ); 
+      this.userPictureURL = user[this.userPictureKey];
     }
     for (let key of userPicKeys) {
       if(user[key]) {
@@ -146,6 +149,6 @@ export class AuthService {
   get userName$() { return this.userName.asObservable(); }
   get isLoggedIn$() { return this.isLoggedIn.asObservable(); }
   get userListData$() { return this.userListData.asObservable(); }
-  get userPictureURL$() { return this.userPictureURL.asObservable(); }
+  // get userPictureURL$() { return this.userPictureURL.asObservable(); }
   
 }
