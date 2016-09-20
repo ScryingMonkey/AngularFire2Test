@@ -34,10 +34,16 @@ import { AuthService } from './services/auth.service';
   providers: [ AuthService ]
 })
 export class AppComponent {
-  // item: FirebaseObjectObservable<any>;
-  // items: FirebaseListObservable<any[]>;
-  // constructor(af: AngularFire) {
-  //   this.item = af.database.object('/customers/Sprout for Business/');
-  //   this.items = af.database.list('/customers/Sprout for Business/constant_contact_campaign_summaries');
-  // }
+  private title:string;
+  private links:Array<any>;
+
+  constructor() {
+  this.title = "The Cosmic Banana";
+  this.links = [  {'label':'1 Banana', 'address':'1 banana'},
+                  {'label':'Datasets', 'address':'datasets'},
+                  {'label':'Dashboard', 'address':'dashboard'},
+                  {'label':'User Data', 'address':'userdata'},
+                  {'label':'Log In', 'address':'login'}
+               ];
+  }
 }

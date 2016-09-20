@@ -70,7 +70,13 @@ export class AuthService {
   logout() {
       console.log("[ AuthService.logout()");
       this._af.auth.logout();
+      this.user.complete();
+      this.userName.next('Dummy User');
       this.isLoggedIn.next(false);
+      this.userPictureURL = "http://png.clipart.me/graphics/thumbs/103/crash-test-dummy_103003187.jpg";
+      this.userHasPicture = true;
+      this.userPictureKey = 'none';
+      this.liDetailKeys = null;
       console.log("...isLoggedIn == " + this.isLoggedIn.value);   
   }
 

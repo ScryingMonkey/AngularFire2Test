@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 // import { bootstrap } from '@angular/platform-browser-dynamic';
 // import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 import { RouterLink } from '@angular/router';
@@ -16,8 +16,8 @@ import { AuthService } from '../../services/auth.service';
   
 })
 export class UpheaderComponent02 implements OnInit {
-  private title: string;
-  private links: Array<any>;
+  @Input() title: string;
+  @Input() links: Array<any>; // array of links.  labels are displayed.  address is handed to the router on click.
   public titleClicked = true;
   private user$;
   private auth$;
@@ -25,32 +25,23 @@ export class UpheaderComponent02 implements OnInit {
 
   constructor(private _as: AuthService, private router: Router) { 
     console.log('[ UpheaderComponent02.constructor ]');
-    // this._as.user$.subscribe(user => (this.user = user));
-    // this.auth = this._as.auth$.subscribe(res => (console.log("auth change")));
-    this.user$ = _as.user$;
-    // this._as.user$.subscribe( user => (this.userName = user.displayName));
-    this.title = "Demo App!";
-    // array of links.  labels are displayed.  address is handed to the router on click.
-    this.links = [{'label':'1 Banana', 'address':'1 banana'},
-                  {'label':'Datasets', 'address':'datasets'},
-                  {'label':'Welcome', 'address':'welcome'},
-                  {'label':'Dashboard', 'address':'dashboard'},
-                  {'label':'User Data', 'address':'userdata'},
-                  {'label':'Log In', 'address':'login'}
-                  ];
-    // change last link to 'Log in' or 'Log Out'
-    // updates when logged in status changes
-    _as.isLoggedIn$.subscribe(isLoggedIn => {
-      if(isLoggedIn) {
-        this.links[this.links.length-1] = {'label':'Log Out', 'address':'logout'};
-      } else {
-        this.links[this.links.length-1] = {'label':'Log In', 'address':'login'};
-      }
-    });
-
+    // subscribe to the user object for the app
+    this.user$ = this._as.user$;
   }
 
   ngOnInit() {
+        // set the last link (Input from parent) in links to "Log In"
+    this.links[this.links.length-1] = {'label':'Log In', 'address':'login'};
+    // change last link to 'Log in' or 'Log Out'
+    // updates when logged in status changes
+    this._as.isLoggedIn$.subscribe(isLoggedIn => {
+          if(isLoggedIn) {
+            this.links[this.links.length-1] = {'label':'Log Out', 'address':'logout'};
+          } else {
+            this.links[this.links.length-1] = {'label':'Log In', 'address':'login'};
+            //ToDo: if logged out, remove UserData link
+          }
+       });
   }
 
   onClick(address) { 
