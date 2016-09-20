@@ -94,7 +94,7 @@ export class UplistService {
     console.log('......listTitle : ' + data.listTitle);
     console.log('......liTitleKey : ' + data.liTitleKey);
     console.log('......liDetailKeys : ' + data.liDetailKeys);
-    console.log('......liItems : ' + data.liItems);
+    console.log('......liItems : ');
     console.dir(data.liItems);
     console.log('...end writing data to console.')
   }
