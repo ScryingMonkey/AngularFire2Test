@@ -84,7 +84,8 @@ export class AuthService {
     console.log("[ AuthService testing method");
     console.log("......isLoggedIn == " + this.isLoggedIn.value);
     console.log("......logged in user :"+this.userName.value);
-    console.dir(this.user.value);
+    if(this.isLoggedIn.value) { console.dir(this.user.value);
+    } else { console.log('......no user'); }
   }
   updateUserData(user) {
     let userPicKeys = ['photoURL'];
