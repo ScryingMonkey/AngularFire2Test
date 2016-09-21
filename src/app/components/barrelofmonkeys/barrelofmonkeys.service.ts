@@ -13,21 +13,21 @@ export class BarrelOfMonkeysService {
     private monkeysOutOfTheBarrel:Array<Monkey> = new Array();
 	private monkeysInTheBarrel:Array<Monkey> = new Array();
 	// private questionMap = [key {followups}]
-	private currentMonkey = BehaviorSubject<Monkey> = new BehaviorSubject(this.getDummyMonkey());
-	private monkeysInWaiting = BehaviorSubject<Array<Monkey>> = new BehaviorSubject(new Array());
+	private currentMonkey : BehaviorSubject<Monkey> = new BehaviorSubject(this.getDummyMonkey());
+	private monkeysInWaiting : BehaviorSubject<Array<Monkey>> = new BehaviorSubject(new Array());
 
     constructor() { }
     updateCurrentMonkey(monkey:Monkey) {
         console.log('[ BarrelOfMonkeysService.updateCurrentMonkey()');        
         this.currentMonkey.next(monkey);
     }
-    updateMonkeysInWaiting(monkeyKeys:Array<keys>) {        
+    updateMonkeysInWaiting(monkeyKeys:Array<string>) {        
         console.log('[ BarrelOfMonkeysService.updateMonkeysInWaiting()');
         let patientMonkeys:Array<Monkey> = new Array();
         for(let key of monkeyKeys) {
-            patientMonkeys.push(this.findMonkey(key,this.monkeysInTheBarrel));
+            patientMonkeys.push(this.findMonkey(key, this.monkeysInTheBarrel));
             }
-        this.monkeysInWaiting.next(this.monkeysInWaiting.concat(patientMonkeys));
+        this.monkeysInWaiting.next(this.monkeysInWaiting.value.concat(patientMonkeys));
         console.log('...monkeysInWaiting updated');
         return true;
     }
@@ -36,14 +36,14 @@ export class BarrelOfMonkeysService {
         // TODO: Create monkeys and bom from a config file.  
         console.log('[ BarrelOfMonkeysService.createMonkeys()');
         roster = this.getDummyBOM();
-        for (let monkey in roster) {
+        for (let monkey of roster) {
             let anotherMonkey: Monkey = monkey;
             this.monkeysInTheBarrel.push(anotherMonkey);
         }
      }
-     findMonkey(key:string, barrel:Array(Monkey)) {
+     findMonkey(key:string, barrel:Array<Monkey>) {
         console.log('[ BarrelOfMonkeysService.findMonkey');                  
-        for (let monkey in barrel) {
+        for (let monkey of barrel) {
              if (monkey.key === key) {
                  console.log('...found a monkey with key: '+key);
                  console.log(monkey);
@@ -66,18 +66,19 @@ export class BarrelOfMonkeysService {
         let blurb2 = '!  I am wearing a ';
         let blurb3 = '!  Who would you like to see next?';
         let optionType = 'checkbox';
-        let options = [];
-        let followups = [];
+        let options:Array<string> = [];
+        let followups:Array<string> = [];
         let hat = '';
 
         for (let n=0; n < keys.length; n++) {
             let monkey: Monkey = {
-                key: string = keys[n]; // How the monkey is summoned from the barrel
-                blurb: string = blurb1 + keys[n] + blurb2 + hats[n] + blurb3; // What the monkey says.  Ususally a 1-2 sentence solicitation.
-                optionType: string = optionType, // What kind of responses the monkey offers
-                options: [string] = options; // The responses the monkey offers
-                followups: [string] = followups; // The monkey or monkies that comes after this monkey.  If null, you are done!
-                hat: string = hats[n]; // A general description of the monkey's head covering (all monkeys wear hats).
+                key: keys[n], // How the monkey is summoned from the barrel
+                blurb: blurb1 + keys[n] + blurb2 + hats[n] + blurb3, // What the monkey says.  Ususally a 1-2 sentence solicitation.
+                optionType: optionType, // What kind of responses the monkey offers
+                options: options, // The responses the monkey offers
+                followups: followups, // The monkey or monkeys that comes after this monkey.  If null, you are done!
+                submit: 'Next',  // label of the submit button
+                hat: hats[n] // A general description of the monkey's head covering (all monkeys wear hats).
             };
             bom.push(monkey);
         }      
@@ -86,14 +87,14 @@ export class BarrelOfMonkeysService {
         return bom; // barrel of monkeys
     }
     getDummyMonkey() {
-        return new Monkey({
-            key: string = 'dummy'; // How the monkey is summoned from the barrel
-            blurb: string = 'How many uncles does a dummyMonkey have?'; // What the monkey says.  Ususally a 1-2 sentence solicitation.
-            optionType: string = 'checkbox', // What kind of responses the monkey offers
-            options: [string] = ['1', '2', '3']; // The responses the monkey offers
-            followups: [string] = []; // The monkey or monkies that comes after this monkey.  If null, you are done!
-            submit: string = 'Next';
-            hat: string = 'yellow dunce cap'; // A general description of the monkey's head covering (all monkeys wear hats).
-        });
+        return <Monkey> {
+            key: 'dummy', // :string  How the monkey is summoned from the barrel
+            blurb: 'How many uncles does a dummyMonkey have?', // :string  What the monkey says.  Ususally a 1-2 sentence solicitation.
+            optionType: 'checkbox', // :string  What kind of responses the monkey offers
+            options: ['1', '2', '3'], // :String[]  The responses the monkey offers
+            followups: [], // :String[]  The keys of the monkey or monkeys that comes after this monkey.  If null, you are done!
+            submit: 'Next', // :string  Label of submit button
+            hat:  'yellow dunce cap' // :string  A general description of the monkey's head covering (all monkeys wear hats).
+        };
     }
 }

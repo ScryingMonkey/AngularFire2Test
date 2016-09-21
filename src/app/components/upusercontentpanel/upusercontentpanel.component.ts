@@ -48,7 +48,7 @@ export class UpUserContentPanelComponent implements OnInit {
   }
   authtester(){
     console.log('[ UpUserContentPanelComponent.authtester()')
-    this._as.update();
+    // this._as.update();
     this._as.loginTester();
   }
   // ToDo:
