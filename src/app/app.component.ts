@@ -39,7 +39,7 @@ export class AppComponent {
 
   constructor() {
   this.title = "The Cosmic Banana";
-  this.links = [  {'label':'1 Banana', 'address':'1 banana'},
+  this.links = [  {'label':'Buy a Banana', 'address':'buy'},
                   {'label':'Datasets', 'address':'datasets'},
                   {'label':'Dashboard', 'address':'dashboard'},
                   {'label':'User Data', 'address':'userdata'},

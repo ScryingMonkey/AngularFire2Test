@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
+import { BarrelOfMonkeysComponent } from '../barrelofmonkeys/barrelofmonkeys.component';
+
 @Component({
     moduleId: module.id,
-    selector: 'selector',
-    templateUrl: 'upbuycontentpanel.component.html'
+    selector: 'upbuycontentpanelcomponent',
+    templateUrl: 'upbuycontentpanel.component.html',
+    directives: [BarrelOfMonkeysComponent],
+    providers: []
 })
 export class UpBuyContentPanelComponent implements OnInit {
-    constructor() { }
+    constructor() {
+                console.log('[ BarrelOfMonkeysComponent.constructor...');
+     }
 
     ngOnInit() { }
 }
