@@ -27,8 +27,7 @@ export class MonkeySkinComponent implements OnInit {
     monkeyClicked() {
         console.log('[ MonkeySkinComponent.monkeyClicked...');
         // queues up the next monkeys based on options selected
-        let selectedMonkeys = [];  // need to initialize the array before assigning values or will convert to an array of char 
-        selectedMonkeys.concat(this.monkey.responses); // the options that were selected from the form
+        let selectedMonkeys = this.monkey.responses;  // the responses from the monkey
         console.log('...selectedMonkeys :');
         console.log(selectedMonkeys);
         console.log(new Array(selectedMonkeys));

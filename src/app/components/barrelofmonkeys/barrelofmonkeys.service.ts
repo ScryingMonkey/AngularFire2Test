@@ -123,6 +123,7 @@ export class BarrelOfMonkeysService {
         let blurb3 = '!  Who would you like to see next?';
         let optionType = 'checkbox';
         let options:Array<string> = [];
+        let responses:Array<string> = [];
         let followers:Array<string> = [];
         let hat = '';
 
@@ -132,6 +133,7 @@ export class BarrelOfMonkeysService {
                 blurb: blurb1 + keys[n] + blurb2 + hats[n] + blurb3, // What the monkey says.  Ususally a 1-2 sentence solicitation.
                 optionType: optionType, // What kind of responses the monkey offers
                 options: options, // The responses the monkey offers
+                responses: responses,
                 followers: followers, // The monkey or monkeys that comes after this monkey.  If null, you are done!
                 submit: 'Next',  // label of the submit button
                 hat: hats[n] // A general description of the monkey's head covering (all monkeys wear hats).

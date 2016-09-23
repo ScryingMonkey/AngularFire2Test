@@ -12,7 +12,7 @@
             <label for="response">Responses</label>
             <select class="form-control" 
                     id="responses" 
-                    [(ngModel)]="monkey.responses"
+                    [(ngModel)]="monkey.responses[0]"
                     name="responses" >
                 <option *ngFor="let o of monkey.options" [value]="o">{{o}}</option>
             </select>
