@@ -14,13 +14,18 @@ export class MonkeySkinComponent implements OnInit {
 
     constructor(private _bomService: BarrelOfMonkeysService) { 
         console.log('[ MonkeySkinComponent.constructor...');
-        console.log(this._bomService.testMonkeyState());
+        console.log(this._bomService.testState());
     }
 
     ngOnInit() { 
         console.log('[ MonkeySkinComponent.ngOnInit...');
-        console.log(this._bomService.testMonkeyState());
-        
+        this._bomService.testState();
+        // set options on the displayed monkey to the monkeys left in the barrel
+        let options = [];
+        for(let m of this._bomService.monkeysInTheBarrel) {
+            options.push(m.key);
+        }
+        this.monkey.options = options;        
     }
 
     monkeyClicked() {
@@ -28,7 +33,7 @@ export class MonkeySkinComponent implements OnInit {
         // queues up the next monkeys based on options selected
         let selectedMonkeys = this.monkey.responses;  // the responses from the monkey
         console.log('...selectedMonkeys :');
-        console.log(selectedMonkeys);        
+        console.dir(selectedMonkeys);        
 
         this._bomService.updateMonkeysInWaiting(selectedMonkeys);
         this._bomService.recordCurrentMonkeyAnswers(selectedMonkeys); // update currentMonkey with the responses to his options

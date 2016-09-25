@@ -20,17 +20,17 @@ export class BarrelOfMonkeysService {
     constructor() { }
     pullNextMonkey() {
         console.log('[ BarrelOfMonkeysService.pullNextMonkey()');
-        this.testMonkeyState();
+        this.testState();
         // pulls the first monkey-In-Waiting and sends to updateCurrentMonkey()
         // if monkeysInWaiting is empty, trigger roll up
         if(this.monkeysInWaiting.length > 0) {
             console.log('...pulling monkeysInWaiting[0]');
             console.log(this.monkeysInWaiting[0]);
             this.updateCurrentMonkey(this.monkeysInWaiting.shift());
-            this.testMonkeyState();        
+            this.testState();        
         } else {
             console.log('...out of monkeys!');
-            this.testMonkeyState(); 
+            this.testState(); 
             this.outOfMonkeys();
         }
     }
@@ -38,26 +38,26 @@ export class BarrelOfMonkeysService {
         // if there is a currentMonkey, adds currentMonkey to monkeysOutOfTheBarrel
         // makes input the currentMonkey
         console.log('[ BarrelOfMonkeysService.updateCurrentMonkey()');
-        this.testMonkeyState(); 
+        this.testState(); 
         if (monkey) {
             console.log('...monkey: ');
             console.log(monkey);
             this.monkeysOutOfTheBarrel.push(this.currentMonkey.value);    
             monkey.leader = this.currentMonkey.value.key;  // tracked to facilitate a back button
-            console.log('...'+this.currentMonkey.value+' is out of the barrel');           
+            console.log('...'+this.currentMonkey.value.key+' is out of the barrel');           
             this.currentMonkey.next(monkey);
             this.currentMonkey.value.responses = [];
             console.log('...'+monkey.key+' is the next monkey');
-            this.testMonkeyState(); 
+            this.testState(); 
         } else {
             console.log('...this is the first monkey! : '+monkey.key);
-            this.testMonkeyState(); 
+            this.testState(); 
         }
     }
     updateMonkeysInWaiting(followers:Array<string>) {        
         // Adds input to monkeysInWaiting if followers is not empty
         console.log('[ BarrelOfMonkeysService.updateMonkeysInWaiting('+followers.length+' followers)');
-        this.testMonkeyState();         
+        this.testState();         
         if(followers.length < 1) {
             console.log('...no followers!');
             return false;
@@ -83,7 +83,7 @@ export class BarrelOfMonkeysService {
             }
             // this.monkeysInWaiting.concat(patientMonkeys);  //Not working for some reason
             console.log('...monkeysInWaiting updated');
-            this.testMonkeyState(); 
+            this.testState(); 
             return true;
         }
     }
@@ -111,18 +111,21 @@ export class BarrelOfMonkeysService {
         // This doesn't do much currently.  
         // TODO: Create monkeys and bom from a config file.  
         console.log('[ BarrelOfMonkeysService.importBOM()');
-        this.testMonkeyState(); 
+        this.testState(); 
         monkeyRoster = this.getDummyBOM();
         for (let monkey of monkeyRoster) {
+            //TODO: Rewrite to parse monkey from JSON
             let anotherMonkey: Monkey = monkey;
             this.monkeysInTheBarrel.push(anotherMonkey);
         }
+        console.log('...imported bom in to monkeysInTheBarrel, monkeysInTheBarrel:');
+        console.dir(this.monkeysInTheBarrel);
         // move first monkey in monkeysInTheBarrel to monkeysInWaiting
-        this.updateMonkeysInWaiting([this.monkeysInTheBarrel.shift().key]);
+        this.updateMonkeysInWaiting([this.monkeysInTheBarrel[0].key]);
         // move fist monkey in monkeysInWaiting to currentMonkey
         this.pullNextMonkey();
         // print state to console
-        this.testMonkeyState(); 
+        this.testState(); 
     }
     findMonkey(key:string, barrel:Array<Monkey>) {
         console.log('[ BarrelOfMonkeysService.findMonkey('+key+')');     
@@ -192,9 +195,8 @@ export class BarrelOfMonkeysService {
         };
     }
     //Tests
-    testMonkeyState() {
-        console.log('[ BarrelOfMonkeysService.testMonkeyState()');                          
-        console.log('...currentMonkey.key, currentMonkey, monkeysInWaiting, monkeysInTheBarrel, monkeysOutOfTheBarrel: ');
+    testState() {
+        console.log('[ BarrelOfMonkeysService.testState() ...currentMonkey.key, currentMonkey, monkeysInWaiting, monkeysInTheBarrel, monkeysOutOfTheBarrel: ');
         console.log(this.currentMonkey.value.key);
         console.dir(this.currentMonkey.value);
         console.dir(this.monkeysInWaiting);

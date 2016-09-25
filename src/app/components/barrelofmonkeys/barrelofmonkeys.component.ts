@@ -19,12 +19,12 @@ export class BarrelOfMonkeysComponent implements OnInit {
     constructor(private _bomService: BarrelOfMonkeysService) {
         console.log('[ BarrelOfMonkeysComponent.constructor...');
         this._bomService.importBOM( this._bomService.getDummyBOM() );
-        console.log('...updated bom in _bomService. monkeysInTheBarrel:');    
-        console.log(this._bomService.monkeysInTheBarrel);
 
         this._bomService.currentMonkey$.subscribe( monkey => {
             console.log('[ BarrelOfMonkeysComponent.constructor.currentMonkey$.subscribe...');
-            this._bomService.testMonkeyState      
+            //this._bomService.testState();  
+            this.monkey = monkey;  // binds monkey in view (monkeySkin) to currentMonkey in monkeyService
+            // TODO: Define what should be in monkeySkin and what should be here
         } );             
      }
 
