@@ -21,20 +21,16 @@ export class BarrelOfMonkeysComponent implements OnInit {
         this._bomService.importBOM( this._bomService.getDummyBOM() );
         console.log('...updated bom in _bomService. monkeysInTheBarrel:');    
         console.log(this._bomService.monkeysInTheBarrel);
+
         this._bomService.currentMonkey$.subscribe( monkey => {
             console.log('[ BarrelOfMonkeysComponent.constructor.currentMonkey$.subscribe...');
-            console.log('...monkeysInTheBarrel: ');
-            console.log(this._bomService.monkeysInTheBarrel);
-            this.monkey = monkey;
-            console.log('...'+monkey.key+' is the current monkey!');
-            console.log('...monkeysInTheBarrel: ');
-            console.log(this._bomService.monkeysInTheBarrel);        
+            this._bomService.testMonkeyState      
         } );             
      }
 
     ngOnInit() { 
         console.log('[ BarrelOfMonkeysComponent.ngOnInit()...');
-        console.log('...monkeysInTheBarrel: ');
-        console.log(this._bomService.monkeysInTheBarrel);
+        // console.log('...monkeysInTheBarrel: ');
+        // console.log(this._bomService.monkeysInTheBarrel);
     }
 }

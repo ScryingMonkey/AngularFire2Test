@@ -12,94 +12,123 @@ import { Monkey } from './monkey.interface';
 export class BarrelOfMonkeysService {
     private monkeysOutOfTheBarrel: Array<Monkey> = new Array();
 	public monkeysInTheBarrel: Array<Monkey> = new Array();
-    private monkeysInWaiting: Array<Monkey> = new Array();
+    public monkeysInWaiting: Array<Monkey> = new Array();
 	// Observable that is passed to components.  Shared as an observable.
 	private currentMonkey : BehaviorSubject<Monkey> = new BehaviorSubject(this.getDummyMonkey());
 	
 
     constructor() { }
     pullNextMonkey() {
-        console.log('[ BarrelOfMonkeysService.pullNextMonkey()'); 
+        console.log('[ BarrelOfMonkeysService.pullNextMonkey()');
+        this.testMonkeyState();
         // pulls the first monkey-In-Waiting and sends to updateCurrentMonkey()
         // if monkeysInWaiting is empty, trigger roll up
         if(this.monkeysInWaiting.length > 0) {
-            this.outOfMonkeys();
-        } else {
+            console.log('...pulling monkeysInWaiting[0]');
+            console.log(this.monkeysInWaiting[0]);
             this.updateCurrentMonkey(this.monkeysInWaiting.shift());
+            this.testMonkeyState();        
+        } else {
+            console.log('...out of monkeys!');
+            this.testMonkeyState(); 
+            this.outOfMonkeys();
         }
     }
     updateCurrentMonkey(monkey:Monkey) {
         // if there is a currentMonkey, adds currentMonkey to monkeysOutOfTheBarrel
         // makes input the currentMonkey
         console.log('[ BarrelOfMonkeysService.updateCurrentMonkey()');
-        if (this.currentMonkey.value) {
+        this.testMonkeyState(); 
+        if (monkey) {
+            console.log('...monkey: ');
+            console.log(monkey);
             this.monkeysOutOfTheBarrel.push(this.currentMonkey.value);    
             monkey.leader = this.currentMonkey.value.key;  // tracked to facilitate a back button
             console.log('...'+this.currentMonkey.value+' is out of the barrel');           
             this.currentMonkey.next(monkey);
+            this.currentMonkey.value.responses = [];
             console.log('...'+monkey.key+' is the next monkey');
+            this.testMonkeyState(); 
         } else {
             console.log('...this is the first monkey! : '+monkey.key);
+            this.testMonkeyState(); 
         }
     }
     updateMonkeysInWaiting(followers:Array<string>) {        
-        // Adds input to monkeysInWaiting if follower is not empty
-        console.log('[ BarrelOfMonkeysService.updateMonkeysInWaiting()');
-        console.log('...followers.length: '+followers.length);       
+        // Adds input to monkeysInWaiting if followers is not empty
+        console.log('[ BarrelOfMonkeysService.updateMonkeysInWaiting('+followers.length+' followers)');
+        this.testMonkeyState();         
         if(followers.length < 1) {
             console.log('...no followers!');
             return false;
-        } else if(followers.length == 1) {
-            console.log('...only 1 follower! ' +followers);
-            this.monkeysInWaiting.push(this.findMonkey(followers[0], this.monkeysInTheBarrel));
-            return true;
         } else {
             let patientMonkeys:Array<Monkey> = new Array();
             console.log('...followers: '+ followers);
-            console.log(followers);
+            console.dir(followers);
             for(let key of followers) {
                 let foundMonkey = this.findMonkey(key, this.monkeysInTheBarrel);
                 patientMonkeys.push(foundMonkey);
+                // remove patient monkeys from monkeysInTheBarrel by key
+                for(let m of patientMonkeys) {
+                    this.removeMonkeyFromBarrel(m);
+                }
             }
-            this.monkeysInWaiting.concat(patientMonkeys);
+            console.log('...patientMonkeys: ');
+            console.dir(patientMonkeys);
+            for(let m of patientMonkeys) {
+                this.monkeysInWaiting.push(m);
+                console.log('...added '+m.key+' to monkeysInWaiting.  monkeysInWaiting:');
+                console.dir(this.monkeysInWaiting);
+
+            }
+            // this.monkeysInWaiting.concat(patientMonkeys);  //Not working for some reason
             console.log('...monkeysInWaiting updated');
-            console.log('...'+patientMonkeys.toString+' are in-waiting');
+            this.testMonkeyState(); 
             return true;
         }
     }
+    removeMonkeyFromBarrel(monkey: Monkey) {
+        // takes the key of a monkey.  Removes any monkey with matching keys from the barrel.
+        let tempBOM: Array<Monkey> = [];
+        for(let m of this.monkeysInTheBarrel) {
+            if (m.key != monkey.key) {
+                tempBOM.push(m);
+            }
+        }
+        this.monkeysInTheBarrel = tempBOM;
+    }
     outOfMonkeys() {
-            console.log('...no monkeys in the barrel!'); 
-            alert('No monkeys in the barrel!');
+            console.log('...no more monkeys in waiting!'); 
+            alert('No more monkeys in waiting!');
     }
     recordCurrentMonkeyAnswers(responses:Array<string>) {
         console.log('[ BarrelOfMonkeysService.recordCurrentMonkeyAnswers()');        
+        console.log('...This method currently does nothing.');
         // TODO: Refactor to accept non string responses
-        this.currentMonkey.value.responses = responses;
+        //this.currentMonkey.value.responses = responses;
     }
     importBOM(monkeyRoster:Array<any>) {  // what is roster?  JSON? path to txt file? 
         // This doesn't do much currently.  
         // TODO: Create monkeys and bom from a config file.  
         console.log('[ BarrelOfMonkeysService.importBOM()');
+        this.testMonkeyState(); 
         monkeyRoster = this.getDummyBOM();
         for (let monkey of monkeyRoster) {
             let anotherMonkey: Monkey = monkey;
             this.monkeysInTheBarrel.push(anotherMonkey);
         }
-        console.log('...monkeysInTheBarrel: ');
-        console.log(this.monkeysInTheBarrel);
-        // assign the first monkey in the barrel to be currentMonkey
-        let nextMonkey = this.monkeysInTheBarrel.shift();
-        this.currentMonkey.next(nextMonkey);        
-    }
-    queueFirstMonkey(){
-
+        // move first monkey in monkeysInTheBarrel to monkeysInWaiting
+        this.updateMonkeysInWaiting([this.monkeysInTheBarrel.shift().key]);
+        // move fist monkey in monkeysInWaiting to currentMonkey
+        this.pullNextMonkey();
+        // print state to console
+        this.testMonkeyState(); 
     }
     findMonkey(key:string, barrel:Array<Monkey>) {
-        console.log('[ BarrelOfMonkeysService.findMonkey');     
-        console.log('...searching for: '+key+' in: ');
+        console.log('[ BarrelOfMonkeysService.findMonkey('+key+')');     
+        // console.log('...searching for: '+key+' in: ');
         console.log(barrel);
         for (let monkey of barrel) {
-            console.log('...checking '+key+' against '+monkey.key);
              if (monkey.key == key) {
                  console.log('...found a monkey with key: '+key);
                  console.log(monkey);
@@ -111,7 +140,7 @@ export class BarrelOfMonkeysService {
     // Getters
     get currentMonkey$() { return this.currentMonkey.asObservable();}
     getDummyBOM() {
-        console.log('[ BarrelOfMonkeysService.getDummyBOM');                          
+        console.log('[ BarrelOfMonkeysService.getDummyBOM()');                          
         let bom: Array<Monkey> = new Array();
         let monkey:Monkey = this.getDummyMonkey();
         let keys = ['Bob', 'Joey', 'Bobo', 'Heavy', 'Moses'];
@@ -149,8 +178,6 @@ export class BarrelOfMonkeysService {
                 monkey.options = ['This is the only monkey', 'There is no real choice'];
             }
         }
-        console.log('...created a bom!  bom:');
-        console.log(bom);
         return bom; // barrel of monkeys
     }
     getDummyMonkey() {
@@ -163,5 +190,16 @@ export class BarrelOfMonkeysService {
             submit: 'Next', // :string  Label of submit button
             hat:  'yellow dunce cap' // :string  A general description of the monkey's head covering (all monkeys wear hats).
         };
+    }
+    //Tests
+    testMonkeyState() {
+        console.log('[ BarrelOfMonkeysService.testMonkeyState()');                          
+        console.log('...currentMonkey.key, currentMonkey, monkeysInWaiting, monkeysInTheBarrel, monkeysOutOfTheBarrel: ');
+        console.log(this.currentMonkey.value.key);
+        console.dir(this.currentMonkey.value);
+        console.dir(this.monkeysInWaiting);
+        console.dir(this.monkeysInTheBarrel);
+        console.dir(this.monkeysOutOfTheBarrel);
+        console.log('...end of test]');
     }
 }
