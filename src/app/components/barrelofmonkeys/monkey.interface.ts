@@ -1,5 +1,6 @@
 export interface Monkey {
     key: string, // How the monkey is summoned from the barrel
+	image?: string, // image displayed with blurb
 	blurb: string, // What the monkey says.  Ususally a 1-2 sentence solicitation.
 	optionType: string, // What kind of responses the monkey offers.  Must be radio or checkbox (for now)
 	options: Array<string>,  // The responses the monkey offers

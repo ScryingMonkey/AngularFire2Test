@@ -6,6 +6,7 @@ import { BehaviorSubject } from "rxjs/Rx";
 import { Router }   from '@angular/router';
 
 import { Monkey } from './monkey.interface';
+import { UpbuyContentPanelService } from '../upbuycontentpanel/upbuycontentpanel.service';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class BarrelOfMonkeysService {
 	private currentMonkey : BehaviorSubject<Monkey> = new BehaviorSubject(this.getDummyMonkey());
 	
 
-    constructor() { }
+    constructor( private _upbuyCPS:UpbuyContentPanelService ) { }
     pullNextMonkey() {
         console.log('[ BarrelOfMonkeysService.pullNextMonkey()');
         this.testState();
@@ -98,8 +99,20 @@ export class BarrelOfMonkeysService {
         this.monkeysInTheBarrel = tempBOM;
     }
     outOfMonkeys() {
-            console.log('...no more monkeys in waiting!'); 
-            alert('No more monkeys in waiting!');
+        let origin = this.monkeysOutOfTheBarrel.shift();
+        console.log('...no more monkeys in waiting!'); 
+        // alert('No more monkeys in waiting!');
+        console.log('...monkey report:');
+        console.dir(this.getMonkeyReport());
+        this._upbuyCPS.updateShowCheckoutForm$(true);
+        this._upbuyCPS.updateShowBom$(false);
+    }
+    getMonkeyReport() {
+        let report = [];
+        for (let m of this.monkeysOutOfTheBarrel) {
+            report.push(m.responses.toString());
+        }
+        return report;
     }
     recordCurrentMonkeyAnswers(responses:Array<string>) {
         console.log('[ BarrelOfMonkeysService.recordCurrentMonkeyAnswers()');        

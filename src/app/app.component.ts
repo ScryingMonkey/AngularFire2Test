@@ -8,6 +8,7 @@ import { UpFirebaseContentPanelComponent } from './components/upfirebasecontentp
 import { UpContentPanelComponent } from './components/upcontentpanel/upcontentpanel.component';
 import { UpUserContentPanelComponent } from './components/upusercontentpanel/upusercontentpanel.component';
 import { UpLoginPageComponent } from './components/uploginpage/uploginpage.component';
+import { Monkey } from './components/barrelofmonkeys/monkey.interface'
 
 import { AuthService } from './services/auth.service';
 
@@ -36,6 +37,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   private title:string;
   private links:Array<any>;
+  private bom:Array<Monkey>;
 
   constructor() {
   this.title = "The Cosmic Banana";
@@ -45,5 +47,15 @@ export class AppComponent {
                   {'label':'User Data', 'address':'userdata'},
                   {'label':'Log In', 'address':'login'}
                ];
+  // TODO: import bom from here into BarrelOfMonkeysService
+  this.bom = [ { key:'first', image:'flamingo', blurb:'Would you say that this image is of a flamingo?', optionType:'button', 
+                 options:['yes','no'], followers:['second'], submit:'Next', hat:'Yellow Boiler' },
+               { key:'second', image:'elephant', blurb:'Would you say that this image is of a elephant?', optionType:'button', 
+                 options:['yes','no'], followers:['third'], submit:'Next', hat:'Blue Trucker Hat' },
+               { key:'third', image:'dollar', blurb:'Would you like to give me five dollars?', optionType:'button', 
+                 options:['yes','no'], followers:[], submit:'Next', hat:'Blue Top Hat' },          
+              ];
   }
+
+
 }

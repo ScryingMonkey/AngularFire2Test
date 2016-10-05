@@ -5,3 +5,13 @@ export interface ListData {
     liDetailKeys: Array<string>, 
     liItems: Array<Object>
 }
+
+export class ListData {
+    constructor() {}
+    // constructor( public this.listTitle: string, public this.liTitleKey: string,
+    //              public this.liDetailKeys: Array<string>, public this.liItems: Array<Object> ) {}
+
+    createBlank() {
+        return {'listTitle':'', 'liTitleKey':'', 'liDetailKeys':[], 'liItems':[] };
+    }
+}

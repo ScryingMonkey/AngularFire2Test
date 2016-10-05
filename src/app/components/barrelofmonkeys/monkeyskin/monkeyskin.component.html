@@ -3,11 +3,6 @@
     <form action="#" method="post">
         <hr>
         {{ monkey.blurb }}
-        <!--<br>
-        <div *ngFor="let o of monkey.options">
-            <input [value]="o" type="checkbox">{{ o }}
-        </div>
-        <br>-->
         <div class="form-group">
             <label for="response">Responses</label>
             <select class="form-control" 
@@ -18,17 +13,16 @@
             </select>
         </div>
         <br>
-        <button (click)="monkeyClicked()">{{ monkey.submit }}</button>
+        <button (click)="monkeyClicked()" class="btn btn-info">{{ monkey.submit }}</button>
         <hr>
     </form>
-    <br>
-    <br>
-    <br>
-    <br>
-    <hr>
-    currentMonkey!
-    {{ testingMonkey }}
-    <hr>
+    <div *ngIf="testing" >
+        <br>
+        <hr>
+        currentMonkey!
+        {{ testingMonkey }}
+        <hr>
+    </div>
 </div>
 <br><br>
 

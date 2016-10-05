@@ -11,10 +11,12 @@ import { BarrelOfMonkeysService } from '../barrelofmonkeys.service';
 })
 export class MonkeySkinComponent implements OnInit {
     @Input() monkey: Monkey;
+    private testing:boolean;
 
     constructor(private _bomService: BarrelOfMonkeysService) { 
         console.log('[ MonkeySkinComponent.constructor...');
         console.log(this._bomService.testState());
+        this.testing = false;
     }
 
     ngOnInit() { 

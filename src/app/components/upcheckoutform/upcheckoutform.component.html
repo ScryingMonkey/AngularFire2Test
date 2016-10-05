@@ -1,0 +1,49 @@
+<div *ngIf="showTitle">
+    <h1><center>{{ title }}</center></h1>
+</div>
+
+<div *ngIf="showAmount">
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <center><h3>
+            Donation : ${{ donationAmount }}
+            </h3></center>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showForm"> 
+    <hr>
+    <div class="form-group">
+        <form checkout-form="stripeCallback" >
+
+            <div class="row form-group">
+                <label for="ccNumber-input" class="col-xs-2 col-form-label ">Card Number</label>            
+                <div class="col-xs-10">
+                    <input [(ngModel)]="ccNumber" class="form-control"
+                        type="number" placeholder="XXXX-XXXX-XXXX-XXXX" id="ccNumber-input" >
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <label for="ccExpiry-input" class="col-xs-2 col-form-label ">Exp Date</label>
+                <div class="col-xs-3">
+                    <input [(ngModel)]="ccExpiry" class="form-control" 
+                        type="date" placeholder="yyyy-mm-dd" id="ccExpiry-input">
+                </div>
+                <label for="ccCvv-input" class="col-xs-2 col-form-label ">CVV</label>
+                <div class="col-xs-3">
+                    <input [(ngModel)]="ccCvv" class="form-control"
+                        type="number" placeholder="333" id="ccCvv-input"
+                        maxlength="3" >
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-success align-right"
+                        (click)='submitForm()'>Submit</button>
+                </div>
+            </div>
+                
+        </form>
+    </div>
+    <hr>
+</div>

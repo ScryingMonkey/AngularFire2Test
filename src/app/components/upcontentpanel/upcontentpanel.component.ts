@@ -4,9 +4,11 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import {Observable} from 'rxjs/observable';
 
 import { UpListComponent } from '../uplist/uplist.component';
+import { UpfirebaseListDataService } from '../uplist/upfirebaselistdata.service';
 import { UplistService } from '../uplist/uplist.service';
 import { UpPieChartComponent } from '../uppiechart/uppiechart.component';
 import { PieChartData } from '../uppiechart/piechartdata.interface';
+import { ListData } from '../uplist/listdata.interface'
 // import { Post } from '../../services/post';
 
 @Component({
@@ -15,7 +17,7 @@ import { PieChartData } from '../uppiechart/piechartdata.interface';
   templateUrl: 'upcontentpanel.component.html',
   directives: [UpListComponent, UpPieChartComponent],
   styleUrls: ['upcontentpanel.component.css'],
-  providers: [ UplistService, HTTP_PROVIDERS ]
+  providers: [ UplistService, UpfirebaseListDataService, HTTP_PROVIDERS ]
 })
 export class UpContentPanelComponent implements OnInit {
   private listTitle: string;
@@ -24,13 +26,22 @@ export class UpContentPanelComponent implements OnInit {
   private liItems: Observable<Object[]>;
   private pieChartData: Observable<PieChartData>;
 
-  constructor(private _uplistService: UplistService) {
+  private afListData:ListData;
+  
+  constructor(private _uplistService: UplistService, private _upfirebaseDLS:UpfirebaseListDataService) {
     console.log('[ UpLoginPageComponent.constructor');
-    // Establish subcriptons
-    // this._uplistService.listTitle$.subscribe(
-    //                   (listTitle:string) => this.listTitle = listTitle,
-    //                   (error:any) => console.error(error)
-    //                   );
+    this.afListData = this._uplistService.getDummyListData();
+    this._uplistService.updateListData(this.afListData);    
+    // initialize _upfirebaseDLS list title
+    this._upfirebaseDLS.initializeListTitle('/customers/Sprout for Business/');
+    // initializes _upfirebaseDLS listData object
+    this._upfirebaseDLS.initializeListData(
+                              "Test List Title from upcontentpanel", 
+                              "campaignTitle", 
+                              ['clickThrough','openRate','totalSent','timeSent'], 
+                              '/customers/Sprout for Business/constant_contact_campaign_summaries' );
+    // bind this.afListData to _upfirebaseDLS listData object
+    this._upfirebaseDLS.listData$.subscribe( res => this.afListData = res );
   }
   ngOnInit() {
     console.log('[ UpContentPanelComponent.ngOnInit');
@@ -39,7 +50,7 @@ export class UpContentPanelComponent implements OnInit {
     // pass observable to uppiechart child
     this.pieChartData = this._uplistService.pieChartData$;
     // Update data
-    this._uplistService.updateListData(this._uplistService.getDummyListData());
+    this._uplistService.updateListData(this.afListData);
     // OR if passing the observable to the template and using the async pipe 
     //this.data = _testService.testData$;
     console.log('...pieChartData fetched');
