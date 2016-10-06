@@ -71,20 +71,17 @@ export class UplistService {
   get pieChartData$() { return this.pieChartData.asObservable(); }
   getDummyListData() {
     console.log('[ UplistService.updateTestData()');
+    // must be a ListData object ListData { listTitle: string, liTitleKey: string, liDetailKeys: Array<string>, liItems: Array<Object> }
     let data: ListData = {
       'listTitle': 'Dummy Title From UplistService',
       'liTitleKey': 'liTitle',
       'liDetailKeys': ['detail1', 'detail2', 'detail3'],
-      'liItems': [
-          {'liTitle': 'liTitle1' , 'detail1':3, 
-          'detail2':4, 'detail3':5},
-          {'liTitle': 'liTitle2' , 'detail1':345, 
-          'detail2':135, 'detail3':34},
-          {'liTitle': 'liTitle3' , 'detail1':10485, 
-          'detail2':3409, 'detail3':245}
-        ]
-    }
-    console.log('...updating data:')
+      'liItems': [ {'liTitle': 'liTitle1' , 'detail1':3, 'detail2':4, 'detail3':5},
+                   {'liTitle': 'liTitle2' , 'detail1':345, 'detail2':135, 'detail3':34},
+                   {'liTitle': 'liTitle3' , 'detail1':10485, 'detail2':3409, 'detail3':245}
+                 ]
+                          };
+    console.log('...updating data:');
     return data;
   }
   //Testers

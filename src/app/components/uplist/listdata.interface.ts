@@ -11,7 +11,7 @@ export class ListData {
     // constructor( public this.listTitle: string, public this.liTitleKey: string,
     //              public this.liDetailKeys: Array<string>, public this.liItems: Array<Object> ) {}
 
-    createBlank() {
-        return {'listTitle':'', 'liTitleKey':'', 'liDetailKeys':[], 'liItems':[] };
-    }
+    // createBlank() {
+    //     return {'listTitle':'', 'liTitleKey':'', 'liDetailKeys':[], 'liItems':[] };
+    // }
 }
