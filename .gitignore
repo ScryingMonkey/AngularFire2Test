@@ -31,6 +31,3 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-
-#main.ts holds all keys
-/src/main.ts
