@@ -1,0 +1,19 @@
+<div class= "row">
+    <div class = "col-md-1"></div>
+    <div class = "col-md-10"> 
+        <center><barrel-of-monkeys [hidden]="!showBom">monkeys loading...</barrel-of-monkeys></center>
+    </div>
+    <div class = "col-md-1"></div>
+</div>
+
+<div class= "row">
+    <div class = "col-md-1"></div>
+    <div class = "col-md-10"> 
+        <center><upcheckoutform [hidden]="!showCheckoutForm" [title]="_upBuyCPS.checkoutTitle">form loading...</upcheckoutform></center> 
+    </div>
+    <div class = "col-md-1"></div> 
+</div>
+
+
+<button *ngIf="testing"  (click)="test()" class="btn btn-info">test</button>
+

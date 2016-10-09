@@ -1,0 +1,17 @@
+
+  <div class="uplist-border-box">
+    <h1 class="uplist-title">
+      <img src="{{ userListData.userPictureURL }}">{{ userListData.listTitle }}
+    </h1>
+      <div class="uplist col-md-12">
+        <ul class="list-container">
+          <li class="text" *ngFor="let item of userListData.liItems">
+            <up-li-1d
+              [item]="item"
+              (clickEmitter)="onClicked($event)"
+              [liClicked]='liClicked'>
+            </up-li-1d>
+          </li>
+        </ul>
+      </div>
+  </div>
