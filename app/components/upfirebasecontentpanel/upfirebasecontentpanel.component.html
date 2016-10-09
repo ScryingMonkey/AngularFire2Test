@@ -1,0 +1,22 @@
+<div class="row content-container container-fluid">
+  <div class="col-md-3 content-panel">
+    <up-list
+      [items]="afItems"
+      [title]="afListTitle"
+      [keysToDisplayInDetail]="afListKeys"
+      [liTitleKey]="afLiTitleKey">
+    </up-list>
+  </div>
+  <div class="col-md-3 content-panel">
+    <up-list
+      [items]="testListItems"
+      [title]="testListTitle"
+      [liTitleKey]="testListLiTitleKey"
+      [detailLabels]="afDetailLabels" 
+      [keysToDisplayInDetail]="testListKeys" >
+    </up-list>
+  </div>
+  <div class="col-md-6">
+    <up-piechart></up-piechart>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+
+  <div class="uplist-border-box">
+    <h1 class="uplist-title">
+      {{ listData.listTitle }}
+    </h1>
+    <div class="uplist">
+      <ul class="list-container">
+        <li class="text" *ngFor="let item of listData.liItems">
+          <up-li
+            [item]="item"
+            [liTitleKey]="listData.liTitleKey"
+            [liDetailKeys]="listData.liDetailKeys" 
+            (clickEmitter)="onClicked($event)"
+            [liClicked]='liClicked'>
+          </up-li>
+        </li>
+      </ul>
+    </div>
+  </div>
